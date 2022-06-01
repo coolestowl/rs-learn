@@ -12,11 +12,19 @@ struct Cli {
 enum Commands {
     /// Adds files to myapp
     Add(Add),
+
+    /// Gets files in myapp
+    Get(Get),
 }
 
 #[derive(Args)]
 struct Add {
     name: Option<String>,
+}
+
+#[derive(Args)]
+struct Get {
+    key: Option<String>
 }
 
 fn main() {
@@ -27,6 +35,9 @@ fn main() {
     match &cli.command {
         Commands::Add(name) => {
             println!("'myapp add' was used, name is: {:?}", name.name)
+        }
+        Commands::Get(argv) => {
+            println!("'myapp get' was used, key is: {:?}", argv.key)
         }
     }
 }

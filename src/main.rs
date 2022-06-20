@@ -1,5 +1,8 @@
 use clap::{Args, Parser, Subcommand};
 
+mod sub;
+mod subsub;
+
 #[derive(Parser)]
 #[clap(author, version, about, long_about = None)]
 #[clap(propagate_version = true)]
@@ -15,6 +18,10 @@ enum Commands {
 
     /// Gets files in myapp
     Get(Get),
+
+    Sub(sub::Sub),
+
+    Subsub(subsub::SubSub),
 }
 
 #[derive(Args)]
@@ -38,6 +45,14 @@ fn main() {
         }
         Commands::Get(argv) => {
             println!("'myapp get' was used, key is: {:?}", argv.key)
+        }
+        Commands::Sub(argv) => {
+            if let Err(e) = sub::run(argv) {
+                println!("error: {:?}", e);
+            }
+        }
+        Commands::Subsub(argv) => {
+            let _ = subsub::run(argv);
         }
     }
 }
